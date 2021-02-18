@@ -1,0 +1,6 @@
+{
+	"GET_PAGE_DATA": "SELECT id,client_id,page,position,widget,properties,context,databinding,eventactions from pageconfig where page=? and client_id=? and is_deleted=0;",
+	"GET_WIDGET_DETAILS_REC": "SELECT id,client_id,page,position,widget,properties,context,databinding,eventactions,post_event_actions,datamode,demodata from pageconfig where id=? LIMIT 1;",
+	"GET_PAGE_SUBMIT_DATA":"select id,submit_code,client_id,page,position,data_positions,properties,validation,pre_execution,execution,post_execution from pageupdateconfig where page=? and client_id=? and is_deleted=0;",
+	"GET_WIDGET_SUBMIT_DETAILS_REC": "select id,submit_code,client_id,page,position,data_positions,properties,validation,pre_execution,execution,post_execution from pageupdateconfig where id=? LIMIT 1;"
+}

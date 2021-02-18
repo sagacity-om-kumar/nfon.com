@@ -1,0 +1,35 @@
+{
+	"environmentconfiguration": {
+		"serverconfigparams": {
+			"serverwebserviceport": 8079,
+			"serverip": "80.85.85.195",
+			"sessiontimeoutmin": 120
+		},
+		"logconfigparams": {
+			"logdir": "logs\\server_logs\\",
+			"logfilenameprefix": "server.log",
+			"logfile": "logs\\server_logs\\server.log",
+			"loglevel": "DEBUG",
+			"logfilesize": 20971520,
+			"logmaxfiles": 10
+		},
+		"dbconfigparams": {
+			"dbname": "nfon_bulkupload_dev",
+			"dbservername": "localhost",
+			"dbserverport": 3306,
+			"dbconnectionstring": "root:sk!@redone#07@tcp(80.85.85.195:3306)/nfon_bulkupload_dev?parseTime=true",
+			"dbsetmaxopenconns": 20,
+			"dbsetmaxidleconns": 10,
+			"dbsetconnmaxlifetimeinSec": 300
+		},
+		"schedulerconfigparams": {
+			"iscroninminutes": true,
+			"cronminuteslimit": 2,
+			"iscroninhours": false,
+			"cronhourslimit": 2
+		},
+		"fileconfigparams": {
+			"basefilepath": "contents/uploadedFiles/"
+		}
+	}
+}

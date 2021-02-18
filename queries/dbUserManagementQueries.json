@@ -1,0 +1,65 @@
+{
+	"USER_LOGIN": "SELECT u.id,u.username,u.role_id,r.code as role_code,r.name as role_name,u.first_name,u.last_name,u.email_id,u.client_id,u.can_add_user,u.status FROM m_user u, c_role r WHERE u.role_id=r.id and u.username=? AND binary u.user_password=? and u.is_deleted=0;",
+	
+	"ADD_USER":"insert into m_user (username,user_password,first_name,last_name,email_id,role_id,client_id,account_number,status,can_add_user) values(:username,:user_password,:first_name,:last_name,:email_id,:role_id,'NFON',:account_number,:status,:can_add_user);",
+
+	"GET_USER_PASSWORD": "SELECT user_password from m_user where id=?;",
+
+	"CHANGE_PASSWORD": "UPDATE m_user SET user_password=? where id=?;",
+
+	"GET_USER_INFO":"SELECT mu.id, (select username from m_user where id =mpaum.partner_admin_id )partneradminusername,mu.username, cr.name as role_name, cr.code AS role_code, mu.first_name , mu.last_name , mu.email_id, 1 AS allow_to_add_user FROM m_user mu LEFT JOIN c_role cr ON cr.id=mu.role_id LEFT JOIN m_partner_admin_user_mapping mpaum ON mu. id = mpaum.partner_user_id WHERE mu.is_deleted=0 AND mu.id=? AND cr.code=?;",
+	
+	"GET_PARTNER_ADMIN_KACC_DETAILS":"SELECT mpakm.id, mpakm.kaccount_username, mpakm.client_key, mpakm.secret_key, 'delete' as delete_icon FROM m_partner_admin_kaccount_mapping mpakm LEFT JOIN m_user mu ON mu.id=mpakm.partner_admin_id LEFT JOIN c_role cr ON cr.id=mu.role_id WHERE mpakm.partner_admin_id= %v AND cr.code= %v AND mu.is_deleted=0 AND mpakm.is_kacc_deleted=0 AND(mpakm.kaccount_username LIKE %v OR mpakm.client_key LIKE %v OR mpakm.secret_key LIKE %v) LIMIT %v,%v;",
+	
+	"GET_COUNT_PARTNER_ADMIN_KACC_DETAILS":"SELECT count(*) FROM m_partner_admin_kaccount_mapping mpakm LEFT JOIN m_user mu ON mu.id=mpakm.partner_admin_id LEFT JOIN c_role cr ON cr.id=mu.role_id WHERE mpakm.partner_admin_id= %v AND cr.code= %v AND mu.is_deleted=0 and mpakm.is_kacc_deleted=0 AND(mpakm.kaccount_username LIKE %v OR mpakm.client_key LIKE %v OR mpakm.secret_key LIKE %v);",
+	
+	"GET_TOTAL_COUNT_PARTNER_ADMIN_KACC_DETAILS":"SELECT count(*) FROM m_partner_admin_kaccount_mapping mpakm LEFT JOIN m_user mu ON mu.id=mpakm.partner_admin_id LEFT JOIN c_role cr ON cr.id=mu.role_id WHERE mpakm.partner_admin_id= %v AND cr.code= %v AND mu.is_deleted=0 and mpakm.is_kacc_deleted=0;",
+
+	"GET_PARTNER_ADMIN_PARTNERS_USER_LIST":"SELECT mu.id, cr.code AS role_code, mu.first_name, mu.last_name,mu.username, mu.email_id,'kaccount' AS kaccount_username, 'remove_red_eye' as symbol_view, case when mu.status ='USERACTIVE' then 1 else 0 end as symbol_status, 'lock_open' as symbol_reset, 'edit' as symbol_edit FROM m_partner_admin_user_mapping mpaum LEFT JOIN m_user mu ON mu.id = mpaum.partner_user_id LEFT JOIN c_role cr ON cr.id = mu.role_id WHERE mu.is_deleted = 0 AND mpaum.partner_admin_id = %v AND( mu.first_name LIKE %v OR mu.last_name LIKE %v) LIMIT %v, %v;",
+
+	"GET_COUNT_PARTNERS_PARTNER_USER_LIST":"SELECT count(*) FROM m_partner_admin_user_mapping mpaum LEFT JOIN m_user mu ON mu.id = mpaum.partner_user_id LEFT JOIN c_role cr ON cr.id = mu.role_id WHERE mu.is_deleted = 0 AND mpaum.partner_admin_id = %v AND( mu.first_name LIKE %v OR mu.last_name LIKE %v);",
+
+	"GET_TOTAL_COUNT_PARTNER_ADMINS_PARTNER_USER_LIST":"SELECT count(*) FROM m_partner_admin_user_mapping mpaum LEFT JOIN m_user mu ON mu.id = mpaum.partner_user_id LEFT JOIN c_role cr ON cr.id = mu.role_id WHERE mu.is_deleted = 0 AND mpaum.partner_admin_id = %v;",
+
+	"GET_PARTNER_USER_KACC_DETAILS":"SELECT mpakm.id, mpakm.kaccount_username, mpakm.client_key, mpakm.secret_key, 'delete' as delete_icon FROM m_partner_user_kaccount_mapping mpukm LEFT JOIN m_user mu ON mu.id = mpukm.partner_user_id LEFT JOIN c_role cr ON cr.id = mu.role_id LEFT JOIN m_partner_admin_kaccount_mapping mpakm ON mpakm.id = mpukm.k_account_id WHERE mpukm.partner_user_id = %v AND cr.code = %v AND mu.is_deleted = 0 and mpakm.is_kacc_deleted=0 and mpukm.is_kacc_associated=0 AND( mpakm.kaccount_username LIKE %v OR mpakm.client_key LIKE %v OR mpakm.secret_key LIKE %v) LIMIT %v, %v ;",
+	
+	"GET_COUNT_PARTNER_USER_KACC_DETAILS":"SELECT count(*) FROM m_partner_user_kaccount_mapping mpukm LEFT JOIN m_user mu ON mu.id = mpukm.partner_user_id LEFT JOIN c_role cr ON cr.id = mu.role_id LEFT JOIN m_partner_admin_kaccount_mapping mpakm ON mpakm.id = mpukm.k_account_id WHERE mpukm.partner_user_id = %v AND cr.code = %v AND mu.is_deleted = 0 and mpakm.is_kacc_deleted=0 and mpukm.is_kacc_associated=0 AND( mpakm.kaccount_username LIKE %v OR mpakm.client_key LIKE %v OR mpakm.secret_key LIKE %v) ;",
+	
+	"GET_TOTAL_COUNT_PARTNER_USER_KACC_DETAILS":"SELECT count(*) FROM m_partner_user_kaccount_mapping mpukm LEFT JOIN m_user mu ON mu.id = mpukm.partner_user_id LEFT JOIN c_role cr ON cr.id = mu.role_id LEFT JOIN m_partner_admin_kaccount_mapping mpakm ON mpakm.id = mpukm.k_account_id WHERE mpukm.partner_user_id = %v AND cr.code = %v AND mu.is_deleted = 0 and mpakm.is_kacc_deleted=0 and mpukm.is_kacc_associated=0;",
+
+	"ADD_PARTNER_ADMIN_KACC_MAPPING":"INSERT INTO `m_partner_admin_kaccount_mapping` (partner_admin_id, kaccount_username, client_key,secret_key,is_kacc_enabled) VALUES ( :partner_admin_id, :kaccount_username, :client_key,:secret_key,:is_kacc_enabled);",
+	
+	"GET_USER_ROLE_LIST":"select id,code,name,is_deleted from c_role;",
+	"GET_USER_ROLE_LIST_FOR_PARTNER_ADMIN":"select id,code,name,is_deleted from c_role where code in ('PARTNERUSER');",
+
+	"GET_ALL_USER_LIST":"SELECT mu.id, mu.username , mu.first_name as firstname, mu.last_name as lastname,cr.code AS rolecode,cr.name AS rolename,mu.status,'remove_red_eye' as symbol_view, case when mu.status ='USERACTIVE' then 1 else 0 end as symbol_status, 'lock_open' as symbol_reset, 'edit' as symbol_edit FROM m_user mu LEFT JOIN c_role cr ON cr.id=mu.role_id WHERE cr.code IN ('PARTNERADMIN','NFONADMIN','PARTNERUSER')  AND mu.is_deleted=0 AND mu.username not in ('sysadmin') AND (mu.first_name LIKE %v OR mu.last_name LIKE %v OR mu.username LIKE %v or cr.name like %v) ORDER BY %v   LIMIT %v, %v",
+	"GET_COUNT_ALL_USER_LIST":"SELECT count(*) FROM m_user mu LEFT JOIN c_role cr ON cr.id=mu.role_id WHERE cr.code IN ('PARTNERADMIN','NFONADMIN','PARTNERUSER')  AND mu.username not in ('sysadmin') AND mu.is_deleted=0 AND (mu.first_name LIKE %v OR mu.last_name LIKE %v OR mu.username LIKE %v or cr.name like %v)",
+	"GET_TOTAL_COUNT_ALL_USER_LIST":"SELECT count(*) FROM m_user mu LEFT JOIN c_role cr ON cr.id=mu.role_id WHERE cr.code IN ('PARTNERADMIN','NFONADMIN','PARTNERUSER')  AND mu.username not in ('sysadmin') AND mu.is_deleted=0",
+
+	"GET_PARTNER_ADMIN_ROLE_LIST":"select u.id,username,first_name as firstname,last_name as lastname,cr.code AS rolecode from m_user u,c_role cr where cr.id=u.role_id and cr.code = 'PARTNERADMIN'",
+	
+	"ADD_PARTNER_USER_PARTNER_ADMIN_MAPPING":"INSERT INTO `m_partner_admin_user_mapping` (partner_user_id,partner_admin_id) VALUES ( :partner_user_id, :partner_admin_id)",
+
+	"ADD_PARTNER_USER_KACC_MAPPING":"INSERT INTO `m_partner_user_kaccount_mapping` (partner_user_id,k_account_id) VALUES ( :partner_user_id, :k_account_id)",
+
+	"UPDATE_USER_STATUS":"UPDATE m_user set status =:status where id =:id",
+
+	"DELETE_K_ACCOUNT":"UPDATE m_partner_admin_kaccount_mapping SET is_kacc_deleted=1 where id=:id",
+
+	"UPDATE_USER_BASIC_DETAILS":"update m_user set first_name=:first_name,last_name=:last_name,email_id=:email_id where id=:id",
+
+	"UPDATE_KACCOUNT_DETAILS":"update m_partner_admin_kaccount_mapping set client_key=:client_key,secret_key=:secret_key where id=:id",
+
+	"GET_KACCOUNT_DETAILS_FOR_ADMIN":"select distinct id,kaccount_username,client_key,secret_key,case when client_key is null or secret_key is null then 'false' else 'true' end as iskaccountdetailsfilled from m_partner_admin_kaccount_mapping where is_kacc_enabled=1 and is_kacc_deleted=0",
+	"GET_KACCOUNT_DETAILS_FOR_PARTNER_ADMIN":"select distinct id,kaccount_username,client_key,secret_key,case when client_key is null or secret_key is null then 'false' else 'true' end as iskaccountdetailsfilled from m_partner_admin_kaccount_mapping where is_kacc_enabled=1 and is_kacc_deleted=0 and partner_admin_id = ?",
+	"GET_KACCOUNT_DETAILS_FOR_PARTNER_USER":"select distinct pakm.id,kaccount_username,client_key,secret_key,case when client_key is null or secret_key is null then 'false' else 'true' end as iskaccountdetailsfilled from m_partner_admin_kaccount_mapping pakm, m_partner_user_kaccount_mapping pukm where pakm.id=pukm.k_account_id  and  is_kacc_enabled=1 and is_kacc_deleted=0 and is_kacc_associated=0 and partner_user_id = ?",
+
+	"GET_SMTP_CONFIG_DATA":"select code,value from c_app_setting where group_code ='SETTINGS' and code in ('SMTP_HOST_NAME','SMTP_HOST_PORT','SMTP_USER_NAME','SMTP_HOST_PASSWORD')",
+	"GET_USERNAME_EMAIL_TEMPLATE":"SELECT id,name,code,subject,body,type from c_email_template where code='ADDUSERNAME';",
+	"GET_EMAILID_OF_USER":"SELECT email_id from m_user where id=?",
+	"GET_RESET_PASSWORD_EMAIL_TEMPLATE":"SELECT id,name,code,subject,body,type from c_email_template where code='RESETPASSWORD';",
+	"GET_PASSWORD_EMAIL_TEMPLATE":"SELECT id,name,code,subject,body,type from c_email_template where code='ADDUSERPASSWORD';",
+
+	"DELETE_K_ACCOUNT_ASSOCIATION_WITH_PARTNER_USER":"UPDATE m_partner_user_kaccount_mapping SET is_kacc_associated=1 where k_account_id=:k_account_id and partner_user_id=:partner_user_id",
+	"_DELETE_K_ACCOUNT_ASSOCIATION_WITH_PARTNER_USER":"UPDATE m_partner_user_kaccount_mapping SET is_kacc_associated=1 where k_account_id=:k_account_id"
+}

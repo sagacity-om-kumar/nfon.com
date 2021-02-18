@@ -1,0 +1,5 @@
+{
+    "UPDATE_APP_SETTING": "update c_app_setting set value=? where is_visible=1 and is_deleted=0 and id=?;",
+
+    "INSERT_AUDIT_LOG_REC": "INSERT into audit_log (module,api,page,accessed_by,accessed_dtm) values (:module,:api,:page,:accessed_by,:accessed_dtm);"
+}

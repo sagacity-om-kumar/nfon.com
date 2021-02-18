@@ -1,0 +1,10 @@
+{
+    "GET_FILE_REC_TO_DELETE": "SELECT id,file_name,file_path from m_uploaded_file where file_end_dtm < now() and is_deleted=0;",
+
+    "UPDATE_FILE_REC_AS_DELETED": "UPDATE m_uploaded_file SET is_deleted=1 where id=?;",
+
+    "DELETE_OLD_AUDIT_REC": "DELETE FROM audit_log WHERE accessed_dtm < last_day(now()) + interval 1 day - interval 3 month;",
+
+    "GET_SCHEDULED_JOB_IN_PROGRESS": "select id,status,job_dtm,schedular_last_update_dtm from m_scheduled_job where status = 'IN PROGRESS' and is_deleted = 0;"
+
+}

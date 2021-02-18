@@ -1,0 +1,8 @@
+{
+    "INSERT_TEMPLATE_DATA":"INSERT INTO `m_template` (`created_by`, `created_dtm`, `code`, name, `type`, `category_id`,`description`) VALUES( :created_by, NOW(), 'test', :name, :type, :category_id,:description);",
+    "INSERT_TEMPLATE_HEADER_DATA":"INSERT INTO `m_template_header` ( name, datatype, template_id, category_header_id) VALUES(  :name, :datatype, :template_id, :category_header_id);",
+    "GET_TEMPLATE_DATA":"SELECT m_template.id,m_template.name FROM m_template;",
+    "GET_TEMPLATE_HEADER_DATA":"SELECT m_template_header.name,m_template.id from m_template_header INNER JOIN m_template;",
+    "VALIDATE_GENERIC_TEMPLATE_REC":"SELECT id FROM m_template WHERE `name`=? AND `type`=? AND is_deleted=0;",
+    "VALIDATE_USER_DEFINED_TEMPLATE_REC":"SELECT id FROM m_template WHERE `name`=? AND `type`=? and created_by=? AND is_deleted=0;"
+}

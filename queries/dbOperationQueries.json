@@ -1,0 +1,31 @@
+{
+    "GET_SCHEDULED_JOB": "select id,created_by,created_dtm,updated_by,updated_dtm,filename,record_count,action,status,k_account_id from m_scheduled_job where status = 'NOT STARTED' and job_dtm < Now() and is_deleted=0 order by job_dtm;",
+
+    "GET_SHEDULED_JOB_REC_BY_SCHEDULED_JOB_ID":"select sjrec.id,scheduled_job_id,scheduled_job_view_record_id,sjrec.template_id,template_header_id,record_value,sj.action,cathdr.name, cathdr.display_name,hapi.url,hapi.strategy,code,hapi.action as api_action,hapi.sequence,hapi.method from m_scheduled_job sj left join m_scheduled_job_record sjrec on sj.id=sjrec.scheduled_job_id left join m_template_header tmphdr on tmphdr.id = sjrec.template_header_id left join m_category_header cathdr on cathdr.id = tmphdr.category_header_id left join m_header_api hapi on hapi.category_header_id = tmphdr.category_header_id where sj.id =?;",
+    
+    "GET_HEADER_NAME_FROM_CATEGORY_HEADER":"select th.id,th.template_id,th.category_header_id,ch.display_name,ch.datatype from m_category_header ch left join m_template_header th on ch.id=th.category_header_id where th.template_id=?",
+    
+    "GET_SCHEDULED_JOB_VIEW_REC":"select id,scheduled_job_id,template_id,data from  m_scheduled_job_view_record where scheduled_job_id=?",
+
+    "UPDATE_SCHEDULED_JOB_REC":"update m_scheduled_job_record set record_status=?,error_type_id=?,error_message=? where id=?",
+
+    "UPDATE_SCHEDULED_JOB_VIEW_REC":"update m_scheduled_job_view_record set data=?,execution_data=?,status='PROESSED' where id=?",
+
+    "UPDATE_SCHEDULED_JOB_STATUS":"update m_scheduled_job set status=? where id=?",
+
+    "UPDATE_SCHEDULED_JOB_STATUS_COMPLETED":"update m_scheduled_job set status=?, job_completed_dtm=? where id=?",
+
+    "UPDATE_SCHEDULE_JOB_LAST_UPDATE_DTM":"update m_scheduled_job set schedular_last_update_dtm=? where id=?",
+
+    "INSERT_SCHEDULED_JOB_REC":"insert into m_scheduled_job_record (scheduled_job_id,scheduled_job_view_record_id,template_id,template_header_id,record_value) values(:scheduled_job_id,:scheduled_job_view_record_id,:template_id,:template_header_id,:record_value);",
+
+    "GET_ERROR_TYPE":"select id,code from c_error_type where is_deleted=0;",
+
+    "GET_TEMPLATE_HEADER_DATA_BY_TEMPLATE_ID":"select tmp.id as template_id,tmphdr.id as template_header_id,'get' as action,cathdr.name, cathdr.display_name,hapi.url,hapi.strategy,hapi.code,hapi.action as api_action,hapi.sequence,hapi.method from m_template tmp left join m_template_header tmphdr on tmphdr.template_id = tmp.id left join m_category_header cathdr on cathdr.id = tmphdr.category_header_id left join m_header_api hapi on hapi.category_header_id = tmphdr.category_header_id where tmp.id =?;",
+
+    "GET_HEADER_DATA_BY_HEADER_NAME":"select cathdr.id as template_header_id,'get' as action,cathdr.name, cathdr.display_name,hapi.url,hapi.strategy,hapi.code,hapi.action as api_action,hapi.sequence,hapi.method from m_category_header cathdr left join m_header_api hapi on hapi.category_header_id = cathdr.id where cathdr.name = ? and cathdr.category_id=(select id from m_category limit 1);",
+
+    "truncate_Schedule_Job_Record":"truncate m_scheduled_job_record;",
+
+    "GET_KACC_INFO_BY_SCHEDULE_JOB_ID":"SELECT mpakm.kaccount_username, mpakm.client_key, mpakm.secret_key FROM m_partner_admin_kaccount_mapping mpakm,m_scheduled_job msj WHERE msj.k_account_id=mpakm.id AND msj.id=?;"
+}

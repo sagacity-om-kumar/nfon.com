@@ -1,0 +1,12 @@
+{
+    "ADD_FILE_REC": "INSERT INTO m_uploaded_file (file_name,file_mimetype,file_start_dtm,file_end_dtm,is_deleted,template_id) VALUES(:file_name,:file_mimetype,:file_start_dtm,:file_end_dtm,:is_deleted,:template_id);",
+    "UPDATE_FILE_PATH": "UPDATE  m_uploaded_file SET file_path=? where id =?;",
+    "GET_FILEDETAILS_BY_ID": "SELECT * FROM m_uploaded_file WHERE id=?;",
+    "GET_ALL_HEADER_DATA": "SELECT * FROM  m_category_header;",
+    "ADD_SCHEDULED_JOB_REC": "INSERT INTO m_scheduled_job (created_by,created_dtm,updated_by,updated_dtm,filename,record_count,action,status,job_dtm,job_completed_dtm,is_deleted,k_account_id)  VALUES(:created_by,:created_dtm,:updated_by,:updated_dtm,:filename,:record_count,:action,:status,:job_dtm,:job_completed_dtm,:is_deleted,:k_account_id)",
+    "ADD_SCHEDULED_JOB_VIEW_REC": "INSERT INTO m_scheduled_job_view_record(scheduled_job_id,template_id,data) VALUES (:scheduled_job_id,:template_id,:data)",
+    "GET_ALL_TEMPLATE_HEADER_DATA":"SELECT ch.id,ch.name,ch.display_name,ch.category_id,ch.datatype,ch.is_deleted,ch.excel_name FROM m_category_header ch LEFT JOIN m_template_header th ON ch.id = th.category_header_id WHERE th.template_id = ?;",
+    "RE_SCHEDULE_JOB_DTM": "UPDATE m_scheduled_job SET job_dtm=? where id=?;",
+    "GET_KACC_INFO_BY_KACCID":"SELECT mpakm.kaccount_username, mpakm.client_key, mpakm.secret_key FROM m_partner_admin_kaccount_mapping mpakm WHERE mpakm.id=?;"
+
+}

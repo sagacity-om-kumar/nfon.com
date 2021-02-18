@@ -1,0 +1,7 @@
+{
+   "GET_SETTING_DATA":"SELECT code,value FROM c_app_setting where is_deleted=0;",
+   
+   "GET_APP_STARTUP_DATA": "SELECT code,display_name,value from c_app_setting where is_deleted=0 and code in ('KACCOUNTCUSTOMERID','UPLOADRECORDLIMIT','SCHEDULEJOBDURATIONINDAYS','ISCAPTCHAMANDATORY');",
+
+   "GET_PUBLICLY_EXPOSED_APP_STARTUP_DATA": "SELECT code,display_name,value from c_app_setting where is_deleted=0 and code in ('ISCAPTCHAMANDATORY');"
+}
